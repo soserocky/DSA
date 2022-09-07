@@ -1,0 +1,18 @@
+Bit Magic
+-Two Odd Occurring
+-Power Set using Bitwise
+
+Recursion
+-Generate Subsets
+-Josephus problem
+-Printing all permutations
+
+Arrays
+-Maximum Difference Problem with Order
+-Trapping Rain Water
+-Majority Element
+-Minimum Consecutive Flips
+
+
+
+
