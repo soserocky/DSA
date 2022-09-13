@@ -249,18 +249,7 @@ namespace DSA
 
         internal static void FindTripletsOfElementsWithAGivenSumInASortedArray(int[] input, int number)
         {
-            int low = 0, high = input.Length - 1;
-            while (low < high)
-            {
-                var sum = input[low] + input[high];
-                if (sum == number)
-                {
-                    Console.WriteLine($"Pair is: ${input[low]}, {input[high]}");
-                    return;
-                }
-                else if (sum < number) high--;
-                else low++;
-            }
+            
         }
         internal static int SquareRoot(int number)
         {
