@@ -14,5 +14,9 @@ Arrays
 -Minimum Consecutive Flips
 
 
+Binary Search
+-Binary Search a sorted Array
+-Find a Peak Element in an unsorted Array
+
 
 

@@ -8,6 +8,7 @@
             //BitMagic.Start();
             //Recursion.Start();
             //Arrays.Start();
+            Searching.Start();
             //Revision.Start();
 
             Console.Read();
