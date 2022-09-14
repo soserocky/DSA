@@ -17,6 +17,8 @@ Arrays
 Binary Search
 -Binary Search a sorted Array
 -Find a Peak Element in an unsorted Array
+-Find Repeating Element
+-MinimizeMaximumPagesRead
 
 
 

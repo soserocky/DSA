@@ -15,11 +15,13 @@ namespace DSA
             //Console.WriteLine(IndexOfFirstOccurenceOfElementInSortedArray(new int[8] { 1, 2, 3, 4, 5, 5, 6, 7 }, 5));
             //Console.WriteLine(IndexOfLastOccurenceOfElementInSortedArray(new int[8] { 1, 2, 3, 4, 5, 5, 6, 7 }, 5));
             //Console.WriteLine(CountOccurenceOfNumberInSortedArray(new int[8] { 1, 2, 3, 4, 5, 5, 6, 7 }, 5));
+            //Console.WriteLine(SquareRoot(1000));
             //Console.WriteLine(SearchElementInInfinitelySortedArray(new int[8] { 1, 2, 3, 4, 5, 5, 6, 7 }, 5));
             //Console.WriteLine(FindPeakElementInNonSortedArray(new int[8] { 1, 2, 3, 4, 5, 5, 6, 7 }));
             //FindPairOfElementsWithAGivenSumInASortedArray(new int[8] { 1, 2, 3, 4, 5, 5, 6, 7 }, 10);
-            FindTripletsOfElementsWithAGivenSumInASortedArray(new int[8] { 1, 2, 3, 4, 5, 5, 6, 7 }, 10);
-            //Console.WriteLine(SquareRoot(1000));
+            //FindTripletsOfElementsWithAGivenSumInASortedArray(new int[8] { 1, 2, 3, 4, 5, 5, 6, 7 }, 10);
+            //FindMedianOf2SortedArrays(new int[8] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[4] { 4, 6, 7, 8 });
+            Console.WriteLine(FindRepeatingElementInNonSortedArray(new int[8] { 0, 1, 2, 3, 4, 5, 4, 6 }));
         }
 
         internal static int BinarySearch_Iterative(int[] input, int number)
@@ -194,6 +196,16 @@ namespace DSA
             return count;
         }
 
+        internal static int SquareRoot(int number)
+        {
+            var i = 0;
+            while (i * i <= number)
+            {
+                i++;
+            }
+            return i;
+        }
+
         internal static int SearchElementInInfinitelySortedArray(int[] input, int number)
         {
             //In an infinite array, you can not do mid = (low + high) / 2
@@ -231,7 +243,7 @@ namespace DSA
             return -1;
         }
 
-        internal static void FindPairOfElementsWithAGivenSumInASortedArray(int[] input, int number)
+        internal static int[] FindPairOfElementsWithAGivenSumInASortedArray(int[] input, int number)
         {
             int low = 0, high = input.Length - 1;
             while (low < high)
@@ -239,26 +251,82 @@ namespace DSA
                 var sum = input[low] + input[high];
                 if (sum == number)
                 {
-                    Console.WriteLine($"Pair is: ${input[low]}, {input[high]}");
-                    return;
+                    Console.WriteLine($"Pair is: {input[low]}, {input[high]}");
+                    return new int[] { input[low], input[high] };
                 }
                 else if (sum < number) high--;
                 else low++;
             }
+
+            return null;
         }
 
         internal static void FindTripletsOfElementsWithAGivenSumInASortedArray(int[] input, int number)
         {
-            
-        }
-        internal static int SquareRoot(int number)
-        {
-            var i = 0;
-            while (i * i <= number)
+            if (input.Length < 3) return;
+
+            for (int i = 0; i < input.Length; i++)
             {
-                i++;
+                var arr = new int[input.Length - 1];
+                Array.Copy(input, 0, arr, 0, i);
+                Array.Copy(input, i + 1, arr, i, input.Length - i - 1);
+                var pair = FindPairOfElementsWithAGivenSumInASortedArray(input, number - input[i]);
+                if (pair != null)
+                {
+                    Console.Write(input[i] + " ");
+                    foreach (var item in pair)
+                    {
+                        Console.Write(item + " ");
+                    }
+                    return;
+                }
             }
-            return i;
         }
+
+        internal static int FindMedianOf2SortedArrays(int[] input1, int[] input2)
+        {
+            int pointer1 = 0, pointer2 = 0;
+            var consolidated = new int[input1.Length + input2.Length];
+            for (int i = 0; i < consolidated.Length; i++)
+            {
+                if (input1[pointer1] <= input2[pointer2])
+                {
+                    consolidated[i] = input1[pointer1];
+                    pointer1++;
+                }
+                else
+                {
+                    consolidated[i] = input2[pointer2];
+                    pointer2++;
+                }
+            }
+            var mid = (consolidated.Length) / 2;
+            if (consolidated.Length % 2 == 0)
+                return (consolidated[mid] + consolidated[mid - 1]) / 2;
+
+            else return consolidated[mid];
+        }
+
+        internal static int FindRepeatingElementInNonSortedArray(int[] input)
+        {
+            var visited = new bool[input.Length - 1];
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (visited[input[i]]) return input[i];
+                else visited[input[i]] = true;
+            }
+
+            return -1;
+        }
+
+        internal static int MinimizeMaximumPagesRead(int[] input, int k)
+        {
+            Array.Sort(input);
+            var pages = new int[k];
+
+            return -1;
+
+        }
+        
     }
 }
