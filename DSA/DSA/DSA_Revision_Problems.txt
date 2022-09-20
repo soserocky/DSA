@@ -20,5 +20,8 @@ Binary Search
 -Find Repeating Element
 -MinimizeMaximumPagesRead
 
+Sorting
+-MergeSort
+
 
 

@@ -21,7 +21,8 @@ namespace DSA
             //FindPairOfElementsWithAGivenSumInASortedArray(new int[8] { 1, 2, 3, 4, 5, 5, 6, 7 }, 10);
             //FindTripletsOfElementsWithAGivenSumInASortedArray(new int[8] { 1, 2, 3, 4, 5, 5, 6, 7 }, 10);
             //FindMedianOf2SortedArrays(new int[8] { 1, 2, 3, 4, 5, 6, 7, 8 }, new int[4] { 4, 6, 7, 8 });
-            Console.WriteLine(FindRepeatingElementInNonSortedArray(new int[8] { 0, 1, 2, 3, 4, 5, 4, 6 }));
+            //Console.WriteLine(FindRepeatingElementInNonSortedArray(new int[8] { 0, 1, 2, 3, 4, 5, 4, 6 }));
+            Console.WriteLine(MinimizeMaximumPagesRead(new int[8] { 0, 1, 2, 3, 4, 5, 4, 6 }, 3));
         }
 
         internal static int BinarySearch_Iterative(int[] input, int number)
