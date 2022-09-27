@@ -4,18 +4,21 @@
     {
         internal static void Start()
         {
-           //Program.PrintArray(BubbleSort(new int[] {10,2,3,4,1,8,-9}));
-           //Program.PrintArray(SelectionSort(new int[] {10,2,3,4,1,8,2,-9}));
-           //Program.PrintArray(InsertionSort(new int[] {10,2,3,4,1,8,2,-9}));
-           //Program.PrintArray(MergeTwoSortedArrays(new int[] {0, 2, 4, 6, 8, 10}, new int[] { 1, 3, 5, 7, 9 }));
-           //Program.PrintArray(MergeFunctionOfMergedSort(new int[] {0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9 }, 0, 5, 10));
-           //Program.PrintArray(MergeSort(new int[] {0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9 }, 0, 10));
-           //IntersectionOf2SortedArrays(new int[] { 3, 5, 10, 10, 10, 15, 15, 20 }, new int[] { 5, 10, 10, 15, 30 });
-           //UnionOf2SortedArrays(new int[] { 2, 3, 3, 4, 4 }, new int[] { 4, 4 });
-           NaivePartition(new int[] { 2, 30, 7, 20, 10 }, 4);
+            //Program.PrintArray(BubbleSort(new int[] {10,2,3,4,1,8,-9}));
+            //Program.PrintArray(SelectionSort(new int[] {10,2,3,4,1,8,2,-9}));
+            //Program.PrintArray(InsertionSort(new int[] {10,2,3,4,1,8,2,-9}));
+            //Program.PrintArray(MergeTwoSortedArrays(new int[] {0, 2, 4, 6, 8, 10}, new int[] { 1, 3, 5, 7, 9 }));
+            //Program.PrintArray(MergeFunctionOfMergedSort(new int[] {0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9 }, 0, 5, 10));
+            //Program.PrintArray(MergeSort(new int[] {0, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9 }, 0, 10));
+            //IntersectionOf2SortedArrays(new int[] { 3, 5, 10, 10, 10, 15, 15, 20 }, new int[] { 5, 10, 10, 15, 30 });
+            //UnionOf2SortedArrays(new int[] { 2, 3, 3, 4, 4 }, new int[] { 4, 4 });
+            //NaivePartition(new int[] { 2, 30, 7, 20, 10 }, 4);
+            //Program.PrintArray(LomutoPartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
+            //Program.PrintArray(LomutoPartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
+            Console.WriteLine(HoarePartition(new int[] { 5, 3, 0, 7, 9, 2, 4, 6, 8, 10, 1 }, 0, 10));
         }
 
-        
+
 
         private static int[] BubbleSort(int[] input)
         {
@@ -279,6 +282,56 @@
             {
                 input[i] = arr[i];
             }
+        }
+
+        private static int[] LomutoPartition(int[] input, int low, int high)
+        {
+            var pivot = input[high];
+            int smallerNumbersWindow = low - 1, temp;
+            for (int i = low; i <= high - 1; i++)
+            {
+                if (input[i] < pivot)
+                {
+                    smallerNumbersWindow++;
+                    temp = input[smallerNumbersWindow];
+                    input[smallerNumbersWindow] = input[i];
+                    input[i] = temp;
+                }
+            }
+            smallerNumbersWindow++;
+            temp = input[smallerNumbersWindow];
+            input[smallerNumbersWindow] = input[high];
+            input[high] = temp;
+            return input;
+        }
+
+        //Unlike Lomuto partition, Hoare partition does not ensure placing the pivot at its correct spot
+        //What it ensures is that all numbers including and to the left of the returned value are smaller than pivot
+        private static int HoarePartition(int[] input, int low, int high)
+        {
+            var pivot = input[low];
+            int smallerNumbersWindow = low - 1;
+            int greaterNumbersWindow = high + 1;
+            int temp;
+            while (true)
+            {
+                smallerNumbersWindow++;
+                while (input[smallerNumbersWindow] < pivot)
+                {
+                    smallerNumbersWindow++;
+                }
+                greaterNumbersWindow--;
+                while (input[greaterNumbersWindow] > pivot)
+                {
+                    greaterNumbersWindow--;
+                }
+                if (smallerNumbersWindow >= greaterNumbersWindow) return greaterNumbersWindow;
+
+                temp = input[smallerNumbersWindow];
+                input[smallerNumbersWindow] = input[greaterNumbersWindow];
+                input[greaterNumbersWindow] = temp;
+            }
+            return -1;
         }
     }
 }
