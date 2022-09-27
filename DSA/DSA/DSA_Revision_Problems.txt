@@ -22,6 +22,10 @@ Binary Search
 
 Sorting
 -MergeSort
+-Count Inversions in Array
+-Lomuto Partition
+-Hoare Partition
+-Quick Sort
 
 
 
