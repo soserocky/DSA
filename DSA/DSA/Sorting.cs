@@ -13,12 +13,13 @@
             //IntersectionOf2SortedArrays(new int[] { 3, 5, 10, 10, 10, 15, 15, 20 }, new int[] { 5, 10, 10, 15, 30 });
             //UnionOf2SortedArrays(new int[] { 2, 3, 3, 4, 4 }, new int[] { 4, 4 });
             //NaivePartition(new int[] { 2, 30, 7, 20, 10 }, 4);
-            //Program.PrintArray(LomutoPartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
-            //Program.PrintArray(LomutoPartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
-            Console.WriteLine(HoarePartition(new int[] { 5, 3, 0, 7, 9, 2, 4, 6, 8, 10, 1 }, 0, 10));
+            //Console.WriteLine(LomutoPartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
+            //Console.WriteLine(HoarePartition(new int[] { 5, 3, 0, 7, 9, 2, 4, 6, 8, 10, 1 }, 0, 10));
+            //Program.PrintArray(QuickSortUsingLomutoPartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
+            //Program.PrintArray(QuickSortUsingLomutoPartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
+            //Program.PrintArray(QuickSortUsingHoarePartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
+            Console.WriteLine(KthSmallestElementInDistinctArray(new int[] { 5, 3, 0, 7, 9, 2, 4, 6, 8, 10, 1 }, 0, 10, 6));
         }
-
-
 
         private static int[] BubbleSort(int[] input)
         {
@@ -284,7 +285,11 @@
             }
         }
 
-        private static int[] LomutoPartition(int[] input, int low, int high)
+        //Lomuto partition ensures that:
+        //1. Pivot is at its correct index
+        //2. All numbers to the left of the returned value are smaller than pivot
+        //3. All numbers to the right of the returned value are greater than pivot
+        private static int LomutoPartition(int[] input, int low, int high)
         {
             var pivot = input[high];
             int smallerNumbersWindow = low - 1, temp;
@@ -298,15 +303,17 @@
                     input[i] = temp;
                 }
             }
-            smallerNumbersWindow++;
-            temp = input[smallerNumbersWindow];
-            input[smallerNumbersWindow] = input[high];
+            temp = input[smallerNumbersWindow + 1];
+            input[smallerNumbersWindow + 1] = input[high];
             input[high] = temp;
-            return input;
+            return smallerNumbersWindow + 1;
         }
 
-        //Unlike Lomuto partition, Hoare partition does not ensure placing the pivot at its correct spot
-        //What it ensures is that all numbers including and to the left of the returned value are smaller than pivot
+
+        //Hoare partition ensures that:
+        //1. Pivot may or may not be at its correct index (unlike, Lomuto partition)
+        //2. All numbers to the left of returned value are smaller than or equal to pivot
+        //3. All numbers to the right of returned value are greater than or equal to pivot
         private static int HoarePartition(int[] input, int low, int high)
         {
             var pivot = input[low];
@@ -330,6 +337,42 @@
                 temp = input[smallerNumbersWindow];
                 input[smallerNumbersWindow] = input[greaterNumbersWindow];
                 input[greaterNumbersWindow] = temp;
+            }
+            return -1;
+        }
+
+        private static int[] QuickSortUsingLomutoPartition(int[] input, int low, int high)
+        {
+            if (low < high)
+            {
+                int partition = LomutoPartition(input, low, high);
+                QuickSortUsingLomutoPartition(input, low, partition - 1);
+                QuickSortUsingLomutoPartition(input, partition + 1, high);
+            }
+            return input;
+        }
+
+        private static int[] QuickSortUsingHoarePartition(int[] input, int low, int high)
+        {
+            if (low < high)
+            {
+                int partition = HoarePartition(input, low, high);
+                QuickSortUsingHoarePartition(input, low, partition);
+                QuickSortUsingHoarePartition(input, partition + 1, high);
+            }
+            return input;
+        }
+
+        private static int KthSmallestElementInDistinctArray(int[] input, int low, int high, int k)
+        {
+            if (low == high) return input[low];
+            if (low < high)
+            {
+                int partition = LomutoPartition(input, low, high);
+
+                if (partition == k - 1) return input[partition];
+                else if (partition > k - 1) return KthSmallestElementInDistinctArray(input, low, partition - 1, k);
+                return KthSmallestElementInDistinctArray(input, partition + 1, high, k);
             }
             return -1;
         }

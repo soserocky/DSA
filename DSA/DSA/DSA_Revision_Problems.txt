@@ -26,6 +26,7 @@ Sorting
 -Lomuto Partition
 -Hoare Partition
 -Quick Sort
+-Cycle Sort
 
 
 
