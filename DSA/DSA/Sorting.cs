@@ -16,9 +16,10 @@
             //Console.WriteLine(LomutoPartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
             //Console.WriteLine(HoarePartition(new int[] { 5, 3, 0, 7, 9, 2, 4, 6, 8, 10, 1 }, 0, 10));
             //Program.PrintArray(QuickSortUsingLomutoPartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
-            //Program.PrintArray(QuickSortUsingLomutoPartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
             //Program.PrintArray(QuickSortUsingHoarePartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
-            Console.WriteLine(KthSmallestElementInDistinctArray(new int[] { 5, 3, 0, 7, 9, 2, 4, 6, 8, 10, 1 }, 0, 10, 6));
+            //Console.WriteLine(KthSmallestElementInDistinctArray(new int[] { 5, 3, 0, 7, 9, 2, 4, 6, 8, 10, 1 }, 0, 10, 6));
+            //Program.PrintArray(SegregateEvenAndOdd(new int[] { 5, 3, 0, 7, 9, 2, 4, 6, 8, 10, 1 }));
+            Program.PrintArray(Segregate_0_1_2_2(new int[] { 2, 1, 2, 0, 2, 1, 1, 0, 0, 1, 1, 0, 2, 1, 0, 2 }));
         }
 
         private static int[] BubbleSort(int[] input)
@@ -376,5 +377,85 @@
             }
             return -1;
         }
+        private static int[] SegregateEvenAndOdd(int[] input)
+        {
+            int low = -1, high = input.Length, temp;
+
+            while (low < high)
+            {
+                low++;
+                while (input[low] % 2 > 0)
+                {
+                    low++;
+                }
+                
+                high--;
+                while (input[high] % 2 == 0)
+                {
+                    high--;
+                }
+
+                temp = input[low];
+                input[low] = input[high];
+                input[high] = temp;
+            }
+
+            return input;
+        }
+
+        private static int[] Segregate_0_1_2(int[] input)
+        {
+            int low = 0, mid = 0, high = input.Length, temp = -1;
+
+            while (input[low] == 0 && low < input.Length)
+            {
+                low++;
+            }
+            if (low == input.Length) return input;
+            mid = low - 1;
+            while (true)
+            {
+                mid++;
+                while (input[mid] == 1 && mid < input.Length)
+                {
+                    mid++;
+                }
+                if (input[mid] == 0)
+                {
+                    temp = input[mid];
+                    input[mid] = input[low];
+                    input[low] = temp;
+                    low = low + 1;
+                    mid--;
+                    continue;
+                }
+                high--;
+                while (input[high] == 2 && high > -1)
+                {
+                    high--;
+                }
+                if (input[high] == 0)
+                {
+                    temp = input[high];
+                    input[high] = input[low];
+                    input[low] = temp;
+                    low = low + 1;
+                    high++;
+                    mid--;
+                    continue;
+                }
+                if (mid >= high) return input;
+
+                temp = input[high];
+                input[high] = input[mid];
+                input[mid] = temp;
+
+               
+            }
+
+            return input;
+        }
+
+        
     }
 }
