@@ -25,6 +25,8 @@ Sorting
 -Count Inversions in Array
 -Lomuto Partition
 -Hoare Partition
+-Segregate 2 different types of elements
+-Segregate 3 different types of elements
 -Quick Sort
 -Cycle Sort
 
