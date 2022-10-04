@@ -19,7 +19,8 @@
             //Program.PrintArray(QuickSortUsingHoarePartition(new int[] { 0, 2, 4, 6, 8, 10, 1, 9, 3, 5, 7 }, 0, 10));
             //Console.WriteLine(KthSmallestElementInDistinctArray(new int[] { 5, 3, 0, 7, 9, 2, 4, 6, 8, 10, 1 }, 0, 10, 6));
             //Program.PrintArray(SegregateEvenAndOdd(new int[] { 5, 3, 0, 7, 9, 2, 4, 6, 8, 10, 1 }));
-            Program.PrintArray(Segregate_0_1_2_2(new int[] { 2, 1, 2, 0, 2, 1, 1, 0, 0, 1, 1, 0, 2, 1, 0, 2 }));
+            //Program.PrintArray(Segregate_0_1_2(new int[] { 2, 1, 2, 0, 2, 1, 1, 0, 0, 1, 1, 0, 2, 1, 0, 2 }));
+            Program.PrintArray(CycleSort(new int[] { 2, 1, 2, 0, 2, 1, 1, 0, 0, 1, 1, 0, 2, 1, 0, 2 }));
         }
 
         private static int[] BubbleSort(int[] input)
@@ -456,6 +457,83 @@
             return input;
         }
 
-        
+        private static int[] CycleSort(int[] input)
+        {
+            int pos, item, temp, swaps = 0;
+            for (int cs = 0; cs < input.Length - 1; cs++)
+            {
+                pos = cs;
+                item = input[cs];
+                for (int i = cs + 1; i < input.Length; i++)
+                {
+                    if (input[i] < item) pos++;   
+                }
+
+                if (pos == cs) continue;
+                if (input[pos] == input[cs])
+                {
+                    int k = pos + 1;
+                    while (k < input.Length)
+                    {
+                        if (input[k] == input[pos]) k++;
+                        else break;
+                    }
+                    if (k == input.Length)
+                    {
+                        k = pos - 1;
+                        while (k > cs)
+                        {
+                            if (input[k] == input[pos]) k--;
+                            else break;
+                        }
+                    }
+                    if (k == cs) continue;
+                    pos = k;
+                }
+                
+                temp = input[pos];
+                input[pos] = item;
+                input[cs] = temp;
+                swaps++;
+
+                while (pos != cs)
+                {
+                    pos = cs;
+                    item = input[cs];
+                    for (int i = cs + 1; i < input.Length; i++)
+                    {
+                        if (input[i] < item) pos++;
+                    }
+
+                    if (pos == cs) continue;
+                    if (input[pos] == input[cs])
+                    {
+                        int k = pos + 1;
+                        while (k < input.Length)
+                        {
+                            if (input[k] == input[pos]) k++;
+                            else break;
+                        }
+                        if (k == input.Length)
+                        {
+                            k = pos - 1;
+                            while (k > cs)
+                            {
+                                if (input[k] == input[pos]) k--;
+                                else break;
+                            }
+                        }
+                        if (k == cs) continue;
+                        pos = k;
+                    }
+
+                    temp = input[pos];
+                    input[pos] = item;
+                    input[cs] = temp;
+                    swaps++;
+                }
+            }
+            return input;
+        }
     }
 }
