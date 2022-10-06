@@ -30,5 +30,8 @@ Sorting
 -Quick Sort
 -Cycle Sort
 
+Matrix
+-Median of a RowWiseSortedMatrix
+
 
 
