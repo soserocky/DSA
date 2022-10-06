@@ -10,7 +10,8 @@
             //Arrays.Start();
             //Searching.Start();
             //Revision.Start();
-            Sorting.Start();
+            //Sorting.Start();
+            Matrix.Start();
 
             Console.Read();
         }
@@ -42,6 +43,21 @@
             foreach (var item in input)
             {
                 Console.WriteLine($"Key: {item.Key}, Value: {item.Value}");
+            }
+        }
+
+        internal static void PrintMatrix(int[,] input)
+        {
+            int rows = input.GetUpperBound(0) + 1;
+            int columns = input.GetUpperBound(1) + 1;
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    Console.Write(input[i, j] + " ");
+                }
+                Console.WriteLine("");
             }
         }
     }
