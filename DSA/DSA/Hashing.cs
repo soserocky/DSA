@@ -10,7 +10,9 @@ namespace DSA
     {
         internal static void Start()
         {
-            ImplementMyHashing();       
+            //ImplementMyHashing();
+            //Console.WriteLine(CountNumberOfDistinctElementsInArray(new int[] { 1,1,1,2,3,5,6,88,7,7}));
+            CountFrequenciesOfElementsInArray(new int[] { 1,1,1,2,3,5,6,88,7,7});
         }
 
         private static void ImplementMyHashing()
@@ -22,6 +24,33 @@ namespace DSA
             set1.Insert(17);
             set1.Delete(15);
             Console.WriteLine(set1.Count);
+        }
+        private static int CountNumberOfDistinctElementsInArray(int[] input)
+        {
+            var set = new HashSet<int>();
+
+            foreach (var item in input)
+            {
+                set.Add(item);
+            }
+
+            return set.Count;
+        }
+        private static void CountFrequenciesOfElementsInArray(int[] input)
+        {
+            var dictionary = new Dictionary<int, int>();
+            foreach (var item in input)
+            {
+                if (dictionary.TryGetValue(item, out int value))
+                    dictionary[item] = dictionary[item] + 1;
+                else
+                    dictionary.Add(item, 1);
+            }
+            Console.WriteLine("Frequencies:");
+            foreach (var item in dictionary)
+            {
+                Console.WriteLine(item.Key + " - " + item.Value);
+            }
         }
     }
 
