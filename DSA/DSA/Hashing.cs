@@ -13,6 +13,7 @@ namespace DSA
             //ImplementMyHashing();
             //Console.WriteLine(CountNumberOfDistinctElementsInArray(new int[] { 1,1,1,2,3,5,6,88,7,7}));
             CountFrequenciesOfElementsInArray(new int[] { 1,1,1,2,3,5,6,88,7,7});
+            LongestSubArrayWithGivenSumInArray(new int[] { 5, 8, -4, -4, 9, -2, 2 }, 0);
         }
 
         private static void ImplementMyHashing()
@@ -52,6 +53,139 @@ namespace DSA
                 Console.WriteLine(item.Key + " - " + item.Value);
             }
         }
+
+        private static int CountOfOverlappingElementsIn2Arrays(int[] input1, int[] input2)
+        {
+            var set1 = new HashSet<int>();
+            var count = 0;
+            foreach (var item in input1)
+            {
+                set1.Add(item);
+            }
+            var set2 = new HashSet<int>();
+            foreach (var item in input2)
+            {
+                set2.Add(item);
+            }
+
+            foreach (var item in set2)
+            {
+                if (set1.Add(item)) continue;
+                else count++;
+            }
+
+            return count;
+        }
+
+        private static int CountOfUnionOfElementsIn2Arrays(int[] input1, int[] input2)
+        {
+            var set = new HashSet<int>();
+            foreach (var item in input1)
+            {
+                set.Add(item);
+            }
+            foreach (var item in input2)
+            {
+                set.Add(item);
+            }
+
+            return set.Count;
+        }
+
+        private static bool PairWithAGivenSumInArray(int[] input, int sum)
+        {
+            var set = new HashSet<int>();
+            foreach (var item in input)
+            {
+                if (set.Contains(sum - item)) return true;
+                else set.Add(item);
+            }
+            return false;
+        }
+
+        private static bool SubArrayWith0SumInArray(int[] input)
+        {
+            if (input[0] == 0) return true;
+            if (input[input.Length - 1] == 0) return true;
+            var leftSum = new HashSet<int>();
+            var sum = input[0];
+            for (int i = 1; i < input.Length; i++)
+            {
+                if (leftSum.Add(sum)) sum += input[i];
+                else return true;
+            }
+            if (sum == 0) return true;
+            return false;
+        }
+
+        private static bool SubArrayWithGivenSumInArray(int[] input, int sum)
+        {
+            if (input[0] == sum) return true;
+            if (input[input.Length - 1] == sum) return true;
+            var leftSum = new HashSet<int>();
+            var lsum = input[0];
+            for (int i = 1; i < input.Length; i++)
+            {
+                if (leftSum.Contains(lsum - sum)) return true;
+
+                leftSum.Add(lsum);
+                lsum += input[i];
+            }
+            if (lsum == sum) return true;
+            return false;
+        }
+
+        private static int LongestSubArrayWithGivenSumInArray(int[] input, int sum)
+        {
+            int start = -1, end = -1;
+            if (input[0] == sum)
+            {
+                start = 0; 
+                end = 0;
+            };
+            var leftSum = new Dictionary<int, int>();
+            var lsum = input[0]; 
+            for (int i = 1; i < input.Length; i++)
+            {
+                if (leftSum.TryGetValue(lsum - sum, out int index))
+                {
+                    if (i - 1 - index > end - start)
+                    {
+                        start = index;
+                        end = i - 1;
+                    }
+                }
+                else leftSum.Add(lsum, i);
+                
+                lsum += input[i];
+            }
+            if (lsum == sum)
+            {
+                start = 0;
+                end = input.Length - 1;
+            }
+            if (start > -1 && end > -1)
+            {
+                Console.WriteLine($"The longest sub-array with the given sum {sum} is {start} to {end}");
+            }
+            else 
+            {
+                Console.WriteLine($"There is no sub-array with the given sum = {sum}");
+            }
+
+            return end - start + 1;
+        }
+
+        private static int LongestSubArrayWithEqual1And0(int[] input)
+        {
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == 0) input[i] = -1;
+            }
+
+            return LongestSubArrayWithGivenSumInArray(input, 0);
+        }
+
     }
 
 

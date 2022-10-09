@@ -33,5 +33,9 @@ Sorting
 Matrix
 -Median of a RowWiseSortedMatrix
 
+Hashing
+-Longest consecutive subsequence
+-Longest common span
+
 
 

@@ -12,7 +12,8 @@
             //Revision.Start();
             //Sorting.Start();
             //Matrix.Start();
-            Hashing.Start();
+            //Hashing.Start();
+            Strings.Start();
 
             Console.Read();
         }
