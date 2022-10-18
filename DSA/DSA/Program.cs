@@ -13,8 +13,8 @@
             //Sorting.Start();
             //Matrix.Start();
             //Hashing.Start();
-            Strings.Start();
-
+            //Strings.Start();
+            LinkedList.Start();
             Console.Read();
         }
 
