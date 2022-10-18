@@ -22,7 +22,8 @@ namespace DSA
             //Console.WriteLine(SearchAGivenKeyLinkedListIterative(head, 12));
             var dllHead = CreateDoublyLinkedList();
             //InsertAtBeginningOfDoublyLinkedList(dllHead, 0);
-            ReverseDoublyLinkedList(dllHead, null);
+            dllHead = ReverseDoublyLinkedList(dllHead, null);
+            TraverseDoublyLinkedList(dllHead);
         }
         private static Node CreateSinglyLinkedList()
         {
@@ -228,11 +229,12 @@ namespace DSA
         }
         private static DLLNode ReverseDoublyLinkedList(DLLNode head, DLLNode prev)
         {
-            if (head != null) head.Next = prev;
+            if (head == null) return prev;
             if (prev != null) prev.Previous = head;
-            
-            if (head.Next == null) return head;
-            return ReverseDoublyLinkedList(head.Next, head);
+            var next = head.Next;
+            head.Next = prev;
+            if (next == null) return head;
+            return ReverseDoublyLinkedList(next, head);
         }
     }
 
