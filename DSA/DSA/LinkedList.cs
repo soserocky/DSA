@@ -22,8 +22,13 @@ namespace DSA
             //Console.WriteLine(SearchAGivenKeyLinkedListIterative(head, 12));
             var dllHead = CreateDoublyLinkedList();
             //InsertAtBeginningOfDoublyLinkedList(dllHead, 0);
-            dllHead = ReverseDoublyLinkedList(dllHead, null);
-            TraverseDoublyLinkedList(dllHead);
+            //dllHead = ReverseDoublyLinkedList(dllHead, null);
+            //TraverseDoublyLinkedList(dllHead);
+            //dllHead = DeleteHeadOfDoublyLinkedList(dllHead);
+            var circularHead = CreateCircularLinkedList();
+            //TraverseCircularLinkedList(circularHead);
+            //InsertAtBeginningOfCircularLinkedList(head, 5);
+            circularHead = DeleteHeadOfCircularLinkedList(circularHead);
         }
         private static Node CreateSinglyLinkedList()
         {
@@ -60,21 +65,18 @@ namespace DSA
                 head = head.Next;
             }
         }
-        
         private static void RecursiveTraverseLinkedList(Node head)
         {
             if (head == null) return;
             Console.WriteLine($"Node with value: {head.Value}");
             RecursiveTraverseLinkedList(head.Next);
         }
-        
         private static Node InsertAtBeginningOfLinkedList(Node head, int number)
         {
             Node newHead = new Node(number);
             newHead.Next = head;
             return newHead;
         }
-
         private static Node InsertAtEndOfLinkedList(Node head, int number)
         {
             var endNode = new Node(number);
@@ -107,7 +109,6 @@ namespace DSA
             node.Next = null;
             return head;
         }
-
         private static Node InsertAtGivenPositionOfLinkedList(Node head, int number, int position)
         {
             var n = new Node(number);
@@ -139,7 +140,6 @@ namespace DSA
             }
             return head;
         }
-
         private static int SearchAGivenKeyLinkedListIterative(Node head, int key)
         {
             if (head == null) return -1;
@@ -153,7 +153,6 @@ namespace DSA
             }
             return -1;
         }
-
         private static int SearchAGivenKeyLinkedListRecursive(Node head, int key, int position)
         {
             if (head == null) return -1;
@@ -162,7 +161,6 @@ namespace DSA
 
             return SearchAGivenKeyLinkedListRecursive(head.Next, key, position + 1);
         }
-
         private static DLLNode CreateDoublyLinkedList()
         {
             var head = new DLLNode(1);
@@ -206,7 +204,6 @@ namespace DSA
 
             return head;
         }
-
         private static void TraverseDoublyLinkedList(DLLNode head)
         {
             if (head == null) return;
@@ -235,6 +232,179 @@ namespace DSA
             head.Next = prev;
             if (next == null) return head;
             return ReverseDoublyLinkedList(next, head);
+        }
+        private static DLLNode DeleteHeadOfDoublyLinkedList(DLLNode head)
+        {
+            if (head == null || head.Next == null)
+            {
+                head = null;
+                return null;
+            }
+            var next = head.Next;
+            head = null;
+            return next;
+        }
+        private static DLLNode DeleteEndOfDoublyLinkedList(DLLNode head)
+        {
+            if (head == null) return null;
+
+            var node = head;
+            DLLNode prevNode = null;
+            while (node.Next != null)
+            {
+                node = node.Next;
+                prevNode = node;
+            }
+            prevNode.Next = null;
+            node.Previous = null;
+
+            return prevNode;
+        }
+        private static Node CreateCircularLinkedList()
+        {
+            var head = new Node(1);
+            var node2 = new Node(2);
+            var node3 = new Node(3);
+            var node4 = new Node(4);
+            var node5 = new Node(5);
+            var node6 = new Node(6);
+            var node7 = new Node(7);
+            var node8 = new Node(8);
+            var node9 = new Node(9);
+            var node10 = new Node(10);
+
+            head.Next = node2;
+            node2.Next = node3;
+            node3.Next = node4;
+            node4.Next = node5;
+            node5.Next = node6;
+            node6.Next = node7;
+            node7.Next = node8;
+            node8.Next = node9;
+            node9.Next = node10;
+            node10.Next = head;
+
+            return head;
+        }
+        private static void TraverseCircularLinkedList(Node head)
+        {
+            var node = head;
+            while (true)
+            {
+                Console.WriteLine($"Circular Linked List - Node with value: {node.Value}");
+                node = node.Next;
+                if (node == head) return;
+            }
+        }
+        private static Node InsertAtBeginningOfCircularLinkedList(Node head, int number)
+        {
+            Node newNode = new Node(number);
+            if (head == null) return newNode;
+            var node = head;
+            while (node.Next != head)
+            {
+                node = node.Next;
+            }
+            
+            node.Next = newNode;
+            newNode.Next = head;
+            return newNode;
+        }
+        private static Node InsertAtEndOfCircularLinkedList(Node head, int number)
+        {
+            Node newNode = new Node(number);
+            if (head == null) return newNode;
+            var node = head;
+            while (node.Next != head)
+            {
+                node = node.Next;
+            }
+
+            node.Next = newNode;
+            newNode.Next = head;
+            return head;
+        }
+        private static Node DeleteHeadOfCircularLinkedList(Node head)
+        {
+            if (head == null || head.Next == null) return null;
+            var next = head.Next;
+            var node = next;
+            while (node.Next != head)
+            {
+                node = node.Next;
+            }
+
+            node.Next = next;
+            head = null;
+            return next;
+        }
+        private static Node DeleteEndOfCircularLinkedList(Node head)
+        {
+            if (head == null || head.Next == null) return null;
+            var next = head.Next;
+            var node = next;
+            while (node.Next != head)
+            {
+                node = node.Next;
+            }
+
+            node.Next = next;
+            head = null;
+            return next;
+        }
+
+        private static Node DeletKthNodeOfCircularLinkedList(Node head, int k)
+        {
+            if (head == null) return null;
+
+            var node = head;
+            var count = 1;
+            var prevNode = head;
+            while (count < k && node != null)
+            {
+                prevNode = node;
+                node = node.Next;
+                count++;
+            }
+            var next = node.Next;
+            prevNode.Next = next;
+
+            if (node == head) return head.Next;
+
+            return head;
+        }
+
+        private static Node SortedInsertInASortedLinkedList(Node head, int number)
+        {
+            var newNode = new Node(number);
+            if (head == null) return newNode;
+            var node = head;
+            while (node.Value < number)
+            {
+                node = node.Next;
+            }
+
+            if (node.Next == null) node.Next = newNode;
+            else
+            {
+                var next = node.Next;
+                node.Next = newNode;
+                newNode.Next = next;
+            }
+            return head;
+        }
+        private static Node MiddleOfLinkedList(Node head)
+        {
+            if (head == null) return null;
+            if (head.Next == null || head.Next.Next == null) return head;
+            var slow = head;
+            var fast = head;
+            while (fast.Next != null && fast.Next.Next != null)
+            {
+                slow = slow.Next;
+                fast = fast.Next.Next;
+            }
+            return slow;
         }
     }
 
