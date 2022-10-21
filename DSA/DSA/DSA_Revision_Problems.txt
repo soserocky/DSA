@@ -40,5 +40,9 @@ Hashing
 String
 -KMP Algorithm
 
+Linked List
+-Merge two sorted Linked Lists
+-Detect and remove loop in Linked List
+
 
 
