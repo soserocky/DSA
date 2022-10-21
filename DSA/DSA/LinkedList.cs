@@ -28,7 +28,10 @@ namespace DSA
             var circularHead = CreateCircularLinkedList();
             //TraverseCircularLinkedList(circularHead);
             //InsertAtBeginningOfCircularLinkedList(head, 5);
-            circularHead = DeleteHeadOfCircularLinkedList(circularHead);
+            //circularHead = DeleteHeadOfCircularLinkedList(circularHead);
+            //ReverseLinkedList_Iterative(head);
+            //ReverseLinkedListInGroupsOfK(head, 3);
+            DetectLoopInLinkedList(head);
         }
         private static Node CreateSinglyLinkedList()
         {
@@ -405,6 +408,110 @@ namespace DSA
                 fast = fast.Next.Next;
             }
             return slow;
+        }
+
+        private static Node ReverseLinkedList_Iterative(Node head)
+        {
+            if (head == null) return null;
+            var current = head;
+            Node previous = null, next = null;
+            while (current != null)
+            {
+                next = current.Next;
+                current.Next = previous;
+                previous = current;
+                current = next;
+            }
+            return previous;
+        }
+        private static Node ReverseLinkedList_Recursive(Node current, Node previous = null)
+        {
+            if (current == null) return previous;
+            if (current.Next == null)
+            {
+                current.Next = previous;
+                return previous;
+            }
+            var next = current.Next;
+            current.Next = previous;
+            return ReverseLinkedList_Recursive(next, current);
+        }
+        private static Node RemoveDuplicatesFromSortedLinkedList(Node head)
+        {
+            var node = head;
+            while (node != null)
+            {
+                if (node.Next != null && node.Value == node.Next.Value) node.Next = node.Next.Next;
+                node = node.Next;
+            }
+            return head;
+        }
+        private static Node ReverseLinkedListInGroupsOfK(Node head, int k)
+        {
+            var current = head;
+            Node previous = null, next = null, tailOfPrevGroup = head;
+            int count = 0; var isHeadFlag = true;
+            while (current != null)
+            {
+                next = current.Next;
+                current.Next = previous;
+                previous = current;
+                current = next;
+                count++;
+                if (count == k)
+                {
+                    if (isHeadFlag)
+                    {
+                        head = previous;
+                        isHeadFlag = false;
+                    }
+                    tailOfPrevGroup.Next = previous;
+                    tailOfPrevGroup = current;
+                }
+
+            }
+            tailOfPrevGroup.Next = previous;
+            if (isHeadFlag && count > 0) head = previous;
+            return head;
+        }
+        private static bool DetectLoopInLinkedList(Node head)
+        {
+            if (head == null || head.Next == null) return false;
+
+            Node slow = head, fast = head;
+            while (fast != null && fast.Next != null)
+            {
+                slow = slow.Next;
+                fast = fast.Next.Next;
+
+                if (slow == fast) return true;
+            }
+            return false;
+        }
+
+        private static Node DetectAndRemoveLoopInLinkedList(Node head)
+        {
+            if (head == null || head.Next == null) return head;
+
+            Node slow = head, fast = head;
+            while (fast != null && fast.Next != null)
+            {
+                slow = slow.Next;
+                fast = fast.Next.Next;
+
+                if (slow == fast)
+                {
+                    slow = head;
+                    while (slow.Next != fast.Next)
+                    {
+                        slow = slow.Next;
+                        fast = fast.Next;
+                    }
+                    fast.Next = null;
+                    return head;
+                }
+            }
+            return head;
         }
     }
 
