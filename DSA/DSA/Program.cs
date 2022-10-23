@@ -14,7 +14,8 @@
             //Matrix.Start();
             //Hashing.Start();
             //Strings.Start();
-            LinkedList.Start();
+            //LinkedList.Start();
+            Stack.Start();
             Console.Read();
         }
 

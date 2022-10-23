@@ -45,5 +45,11 @@ Linked List
 -Detect and remove loop in Linked List
 -Reverse a Linked List
 
+Stack
+-Implement K stacks in an array
+-Stock Span Problem
+-Largest Area in Histogram
+-Largest Area With All 1
+
 
 
