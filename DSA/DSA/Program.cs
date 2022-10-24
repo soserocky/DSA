@@ -15,7 +15,8 @@
             //Hashing.Start();
             //Strings.Start();
             //LinkedList.Start();
-            Stack.Start();
+            //Stack.Start();
+            Queue.Start();
             Console.Read();
         }
 

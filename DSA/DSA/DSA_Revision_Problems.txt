@@ -50,6 +50,7 @@ Stack
 -Stock Span Problem
 -Largest Area in Histogram
 -Largest Area With All 1
+-Infix to Postfix, Prefix
 
 
 
