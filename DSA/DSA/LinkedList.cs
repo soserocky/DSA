@@ -31,7 +31,8 @@ namespace DSA
             //circularHead = DeleteHeadOfCircularLinkedList(circularHead);
             //ReverseLinkedList_Iterative(head);
             //ReverseLinkedListInGroupsOfK(head, 3);
-            DetectLoopInLinkedList(head);
+            //DetectLoopInLinkedList(head);
+            //DetectAndRemoveLoopInLinkedList(head);
         }
         private static Node CreateSinglyLinkedList()
         {
@@ -355,7 +356,6 @@ namespace DSA
             head = null;
             return next;
         }
-
         private static Node DeletKthNodeOfCircularLinkedList(Node head, int k)
         {
             if (head == null) return null;
@@ -376,7 +376,6 @@ namespace DSA
 
             return head;
         }
-
         private static Node SortedInsertInASortedLinkedList(Node head, int number)
         {
             var newNode = new Node(number);
@@ -409,7 +408,6 @@ namespace DSA
             }
             return slow;
         }
-
         private static Node ReverseLinkedList_Iterative(Node head)
         {
             if (head == null) return null;
@@ -488,7 +486,6 @@ namespace DSA
             }
             return false;
         }
-
         private static Node DetectAndRemoveLoopInLinkedList(Node head)
         {
             if (head == null || head.Next == null) return head;
@@ -538,6 +535,54 @@ namespace DSA
             Value = value;
             Next = null;
             Previous = null;
+        }
+    }
+    internal class LRUCacheDesign
+    {
+        private HashSet<int> _hs;
+        private Queue<int> _queue;
+        private int _capacity;
+
+        internal LRUCacheDesign(int capacity)
+        {
+            _hs = new HashSet<int>();
+            _queue = new Queue<int>();
+            _capacity = capacity;
+        }
+        internal void FindElement(int i)
+        {
+            _queue.Clear();
+            _queue.Enqueue(i);
+            if (_hs.Contains(i))
+            {
+                foreach (var item in _hs)
+                {
+                    if (item != i) _queue.Enqueue(item);
+                }
+            }
+            else 
+            {
+                if (_hs.Count() == _capacity)
+                {
+                    foreach (var item in _hs)
+                    {
+                        if (_queue.Count() == _capacity) break;
+                        _queue.Enqueue(item);
+                    }
+                }
+                else
+                {
+                    foreach (var item in _hs)
+                    {
+                        _queue.Enqueue(item);
+                    }
+                }
+            }
+            _hs.Clear();
+            while (_queue.Count() > 0)
+            {
+                _hs.Add(_queue.Dequeue());
+            }
         }
     }
 }
