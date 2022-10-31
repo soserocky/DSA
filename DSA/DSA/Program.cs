@@ -16,7 +16,9 @@
             //Strings.Start();
             //LinkedList.Start();
             //Stack.Start();
-            Queue.Start();
+            //Queue.Start();
+            Tree.Start();
+
             Console.Read();
         }
 
