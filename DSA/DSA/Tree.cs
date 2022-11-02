@@ -18,6 +18,8 @@
             //MaximumOfBinaryTree(root);
             //PrintLeftViewOfBinaryTree(root);
             //ChildrenSumProperty(root);
+            //MaxWidthOfBinaryTree(root);
+            //ConvertBinaryTreeToDoublyLinkedList(root);
         }
 
         private static TreeNode ConstructTree()
@@ -214,7 +216,28 @@
 
             return maxWidth;
         }
+        private static bool CheckForBalancedBinaryTree(TreeNode root)
+        {
+            if ((root == null) || (root.Left == null && root.Right == null)) return true;
+            if (root.Left != null && root.Right != null) return CheckForBalancedBinaryTree(root.Left) && CheckForBalancedBinaryTree(root.Right);
+            if (root.Left != null) return CheckForBalancedBinaryTree(root.Left);
+            if (root.Right != null) return CheckForBalancedBinaryTree(root.Right);
+            return false;
+        }
+        private static void ConvertBinaryTreeToDoublyLinkedList(TreeNode root)
+        {
+            if (root == null) return;
 
+            var left = root.Left;
+            var right = root.Right;
+            
+            InOrderTraversal(root.Left);
+            InOrderTraversal(root.Right);
+
+            left.Right = root;
+            right.Left = root;
+
+        }
     }
 
     internal class TreeNode
