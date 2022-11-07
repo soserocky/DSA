@@ -20,6 +20,8 @@
             //ChildrenSumProperty(root);
             //MaxWidthOfBinaryTree(root);
             //ConvertBinaryTreeToDoublyLinkedList(root);
+            //Console.WriteLine(DiameterOfBinaryTree(root));
+            //Console.WriteLine((LowestCommonAncestor(root, 9, 10)).Value);
         }
 
         private static TreeNode ConstructTree()
@@ -237,6 +239,43 @@
             left.Right = root;
             right.Left = root;
 
+        }
+        private static int DiameterOfBinaryTree(TreeNode root)
+        {
+            if (root == null) return 0;
+
+            var leftHeight = HeightOfBinaryTree(root.Left);
+            var rightHeight = HeightOfBinaryTree(root.Right);
+            var diameter = leftHeight + rightHeight + 1;
+            var maxDiameter = diameter;
+
+            var leftDiameter = DiameterOfBinaryTree(root.Left);
+            var rightDiameter = DiameterOfBinaryTree(root.Right);
+
+            if (leftDiameter > maxDiameter) maxDiameter = leftDiameter;
+            if (rightDiameter > maxDiameter) maxDiameter = rightDiameter;
+
+            return maxDiameter;
+        }
+        private static TreeNode LowestCommonAncestor(TreeNode root, int n1, int n2)
+        {
+            var flag = true;
+            var node = root;
+            while (flag)
+            {
+                if (IsChildOf(node.Left, n1) && IsChildOf(node.Left, n2)) node = node.Left;
+                else if (IsChildOf(node.Right, n1) && IsChildOf(node.Right, n2)) node = node.Right;
+                else flag = false;
+            }
+            return node;
+        }
+        private static bool IsChildOf(TreeNode root, int n)
+        {
+            if (root == null) return false;
+
+            if (root.Value == n) return true;
+
+            return IsChildOf(root.Left, n) || IsChildOf(root.Right, n);
         }
     }
 

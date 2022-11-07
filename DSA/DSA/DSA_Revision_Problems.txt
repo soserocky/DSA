@@ -54,6 +54,8 @@ Stack
 
 Binary Tree
 -Print Left view of Binary Tree
+-Diameter Of Binary Tree
+-Burn Binary Tree from Leaf
 
 
 
